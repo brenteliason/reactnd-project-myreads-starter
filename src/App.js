@@ -1,7 +1,9 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
+import { Route } from 'react-router-dom';
 import BookList from './BookList'
+import BookLista from './BookLista'
 //import BookShelfChanger from './BookShelfChanger'
 import Book from './Book'
 import escapeRegExp from 'escape-string-regexp';
@@ -145,48 +147,8 @@ class BooksApp extends React.Component {
             </div>
           </div>
         ) : (
-          <div className="list-books">
-            <BookList/>
-            <div className="list-books-content">
-              <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {currentShelf.map((book) => (
-                        <li key={book.title}>
-                          <Book title={book.title} authors={book.authors} shelf={book.shelf} onShelfChange={this.changeShelf} width={book.width} height={book.height} backgroundImage={book.backgroundImage} />
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {wantShelf.map((book) => (
-                        <li key={book.title}>
-                          <Book title={book.title} authors={book.authors} shelf={book.shelf} onShelfChange={this.changeShelf} width={book.width} height={book.height} backgroundImage={book.backgroundImage} />
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {readShelf.map((book) => (
-                        <li key={book.title}>
-                          <Book title={book.title} authors={book.authors} shelf={book.shelf} onShelfChange={this.changeShelf} width={book.width} height={book.height} backgroundImage={book.backgroundImage} />
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="book-page">
+            <BookList books={this.state.books} onShelfChange={this.changeShelf} />
             <div className="open-search">
               <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
             </div>
