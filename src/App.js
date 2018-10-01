@@ -4,6 +4,8 @@ import './App.css'
 import BookList from './BookList'
 //import BookShelfChanger from './BookShelfChanger'
 import Book from './Book'
+import escapeRegExp from 'escape-string-regexp';
+import sortBy from 'sort-by';
 
 class BooksApp extends React.Component {
   state = {
@@ -18,7 +20,7 @@ class BooksApp extends React.Component {
       {
         title: "To Kill A Mockingbird",
         authors: "Harper Lee",
-        shelf: "current",
+        shelf: "read",
         width: 128,
         height: 193,
         backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")'
@@ -66,7 +68,7 @@ class BooksApp extends React.Component {
       {
         title: "The Adventures of Tom Sawyer",
         authors: "Mark Twain",
-        shelf: "read",
+        shelf: "want",
         width: 128,
         height: 192,
         backgroundImage: 'url("http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api")'
@@ -74,7 +76,51 @@ class BooksApp extends React.Component {
     ]
   }
 
+  //const static masterBookList = this.state.books;
+
+  changeShelf(event) {
+
+    console.log("Inside App, book shelf changer used")
+    //console.log(event)
+    //console.log(event.target)
+
+    //console.log(event.target.value)
+    let selectedBook = event.target.parentElement.parentElement.parentElement
+    //console.log(selectedBook)
+    let bookTitle = selectedBook.getElementsByClassName("book-title")[0].innerText
+    console.log("Title of target book: " + bookTitle)
+    //for (let i = 0; i < masterBookList.length; i++) {
+      //console.log("Book title is: " + masterBookList[i].title);
+    //}
+    //console.log("This is: ")
+    //console.log(this.state)
+    if (event.target.value === "currentlyReading") {
+      console.log("Current shelf selected")
+      /*this.state.books.map((book) => (
+        if (book.title === bookTitle) {
+          console.log("Found a matching book title")
+        }
+      )*/
+    }
+    if (event.target.value === "wantToRead")
+      console.log("want shelf selected")
+    if (event.target.value === "read")
+      console.log("read shelf selected")
+    if (event.target.value === "none")
+      console.log("no shelf selected")
+  }
+
   render() {
+//create sublists from booklist filtered by book state shelf
+
+    let currentShelf, wantShelf, readShelf;
+    currentShelf = this.state.books.filter((book) => book.shelf === "current")
+    //console.log("Current shelf first book: " + currentShelf[0].title)
+    wantShelf = this.state.books.filter((book) => book.shelf === "want")
+    //console.log("Want to read shelf first book: " + wantShelf[0].title)
+    readShelf = this.state.books.filter((book) => book.shelf === "read")
+    //console.log("Read shelf first book: " + readShelf[0].title)
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -107,12 +153,11 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      <li>
-                        <Book title={this.state.books[0].title} authors={this.state.books[0].authors} shelf={this.state.books[0].shelf} width={this.state.books[0].width} height={this.state.books[0].height} backgroundImage={this.state.books[0].backgroundImage} />
-                      </li>
-                      <li>
-                        <Book title={this.state.books[1].title} authors={this.state.books[1].authors} shelf={this.state.books[1].shelf} width={this.state.books[1].width} height={this.state.books[1].height} backgroundImage={this.state.books[1].backgroundImage} />
-                      </li>
+                      {currentShelf.map((book) => (
+                        <li key={book.title}>
+                          <Book title={book.title} authors={book.authors} shelf={book.shelf} onShelfChange={this.changeShelf} width={book.width} height={book.height} backgroundImage={book.backgroundImage} />
+                        </li>
+                      ))}
                     </ol>
                   </div>
                 </div>
@@ -120,12 +165,11 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      <li>
-                        <Book title={this.state.books[2].title} authors={this.state.books[2].authors} shelf={this.state.books[2].shelf} width={this.state.books[2].width} height={this.state.books[2].height} backgroundImage={this.state.books[2].backgroundImage} />
-                      </li>
-                      <li>
-                        <Book title={this.state.books[3].title} authors={this.state.books[3].authors} shelf={this.state.books[3].shelf} width={this.state.books[3].width} height={this.state.books[3].height} backgroundImage={this.state.books[3].backgroundImage} />
-                      </li>
+                      {wantShelf.map((book) => (
+                        <li key={book.title}>
+                          <Book title={book.title} authors={book.authors} shelf={book.shelf} onShelfChange={this.changeShelf} width={book.width} height={book.height} backgroundImage={book.backgroundImage} />
+                        </li>
+                      ))}
                     </ol>
                   </div>
                 </div>
@@ -133,15 +177,11 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      <li>
-                        <Book title={this.state.books[4].title} authors={this.state.books[4].authors} shelf={this.state.books[4].shelf} width={this.state.books[4].width} height={this.state.books[4].height} backgroundImage={this.state.books[4].backgroundImage} />
-                      </li>
-                      <li>
-                        <Book title={this.state.books[5].title} authors={this.state.books[5].authors} shelf={this.state.books[5].shelf} width={this.state.books[5].width} height={this.state.books[5].height} backgroundImage={this.state.books[5].backgroundImage} />
-                      </li>
-                      <li>
-                        <Book title={this.state.books[6].title} authors={this.state.books[6].authors} shelf={this.state.books[6].shelf} width={this.state.books[6].width} height={this.state.books[6].height} backgroundImage={this.state.books[6].backgroundImage} />
-                      </li>
+                      {readShelf.map((book) => (
+                        <li key={book.title}>
+                          <Book title={book.title} authors={book.authors} shelf={book.shelf} onShelfChange={this.changeShelf} width={book.width} height={book.height} backgroundImage={book.backgroundImage} />
+                        </li>
+                      ))}
                     </ol>
                   </div>
                 </div>

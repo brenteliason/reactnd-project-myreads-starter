@@ -6,6 +6,10 @@ class Book extends Component {
     shelf: this.props.shelf
   }
 
+  changeShelf(event) {
+    console.log("Inside book, shelf changer used")
+  }
+
 	render() {
       //console.log(this.props.title);
       //console.log(this.props.authors);
@@ -17,7 +21,15 @@ class Book extends Component {
         <div className="book">
           <div className="book-top">
             <div className="book-cover" style={{ width:this.props.width, height:this.props.height, backgroundImage:this.props.backgroundImage }}></div>
-            <BookShelfChanger/>
+            <div className="book-shelf-changer">
+              <select onChange={this.props.onShelfChange}>
+                <option value="move" disabled>Move to...</option>
+                <option value="currentlyReading">Currently Reading</option>
+                <option value="wantToRead">Want to Read</option>
+                <option value="read">Read</option>
+                <option value="none">None</option>
+              </select>
+            </div>
           </div>
           <div className="book-title">{this.props.title}</div>
           <div className="book-authors">{this.props.authors}</div>
