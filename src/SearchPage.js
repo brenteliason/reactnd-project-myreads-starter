@@ -16,11 +16,15 @@ class SearchPage extends React.Component {
     }
   }
 
-  componentDidMount() {
+  state = {
+    books: []
+  }
+
+  /*componentDidMount() {
     BooksAPI.getAll().then(resp => {
       this.setState([books : resp]);
     });
-  }
+  }*/
 
   updateQuery = (query) => {
     this.setState({query : query}, this.submitSearch);
@@ -47,13 +51,12 @@ class SearchPage extends React.Component {
   }
 
   updateBook = (book, shelf) => (
-    console.log("Update book called on search page")
-    /*BooksAPI.update(book, shelf).then(resp => {
+    BooksAPI.update(book, shelf).then(resp => {
       book.shelf = shelf;
       this.setState(state => ({
         books: state.books.filter(test => test.id !== book.id).concat([book])
-      }));
-    });*/
+      }))
+    })
   )
 
   render() {

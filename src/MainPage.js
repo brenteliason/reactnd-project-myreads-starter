@@ -16,21 +16,25 @@ class MainPage extends React.Component {
     }
   }
 
-  componentDidMount() {
+  state = {
+    books: []
+  }
+
+  /*componentDidMount() {
     BooksAPI.getAll().then(resp => {
       this.setState([books : resp])
     });
-  }
+  }*/
   //const static masterBookList = this.state.books;
 
   updateBook = (book, shelf) => {
     console.log("Update book called on main page for " + book + " on the " + shelf + " shelf");
-    /*BooksAPI.update(book, shelf).then(resp => {
+    BooksAPI.update(book, shelf).then(resp => {
       book.shelf = shelf;
       this.setState(state => ({
         books: state.books.filter(test => test.id !== book.id).concat([book])
       }));
-    });*/
+    });
   }
 
   render() {
