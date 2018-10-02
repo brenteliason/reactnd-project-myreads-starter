@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import BookShelfChanger from './BookShelfChanger'
 
 class Book extends Component {
   state = {
