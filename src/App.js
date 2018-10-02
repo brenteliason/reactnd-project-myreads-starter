@@ -8,7 +8,7 @@ import SearchPage from './SearchPage';
 class BooksApp extends React.Component {
   render() {
     return (
-      <div>
+      <div className="App">
         <Route exact path="/" component={MainPage}/>
         <Route exact path="/search" component={SearchPage}/>
       </div>

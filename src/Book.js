@@ -11,6 +11,10 @@ class Book extends Component {
     console.log("Inside book, shelf changer used")
   }
 
+  componentDidMount() {
+      console.log(this);
+  }
+
 	render() {
       //console.log(this.props.title);
       //console.log(this.props.authors);
@@ -21,10 +25,11 @@ class Book extends Component {
       return (
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width:this.props.width, height:this.props.height, backgroundImage:this.props.backgroundImage }}></div>
+            <div className="book-cover" style={{ width:128, height:192, backgroundImage:`url("${this.props.book.imageLinks && this.props.book.imageLinks.thumbnail || ""}")` }}></div>
             <div className="book-shelf-changer">
-              <select value={this.props.shelf || "none"} onChange={(e) => { this.props.updateBook(this.props.book, e.target.value) }}>
+              <select value={this.props.book.shelf || "none"} onChange={(e) => { this.props.updateBook(this.props.book, e.target.value) }}>
                 <option value="move" disabled>Move to...</option>
+                <option value="favorites">Favorites</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
@@ -32,8 +37,8 @@ class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">{this.props.title}</div>
-          <div className="book-authors">{this.props.authors && this.props.authors[0] || "No author"}</div>
+          <div className="book-title">{this.props.book.title}</div>
+          <div className="book-authors">{this.props.book.authors[0] || "No author"}</div>
         </div>
       )
     }
