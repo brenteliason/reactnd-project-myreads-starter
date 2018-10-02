@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import * as BooksAPI from './BooksAPI';
 
 class Book extends Component {
   state = {
@@ -21,7 +23,7 @@ class Book extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width:this.props.width, height:this.props.height, backgroundImage:this.props.backgroundImage }}></div>
             <div className="book-shelf-changer">
-              <select onChange={this.props.onShelfChange}>
+              <select value={this.props.shelf || "none"} onChange={(e) => { this.props.updateBook(this.props.book, e.target.value) }}>
                 <option value="move" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -31,7 +33,7 @@ class Book extends Component {
             </div>
           </div>
           <div className="book-title">{this.props.title}</div>
-          <div className="book-authors">{this.props.authors}</div>
+          <div className="book-authors">{this.props.authors && this.props.authors[0] || "No author"}</div>
         </div>
       )
     }
