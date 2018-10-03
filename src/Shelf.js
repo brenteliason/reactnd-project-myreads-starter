@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import * as BooksAPI from './BooksAPI';
 import Book from './Book';
 
 class Shelf extends Component {
@@ -15,7 +13,7 @@ class Shelf extends Component {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {this.props.contents.map((book, key) => (
-              <Book book={book} key={key} updateBook={this.props.updateBook} title={book.title} authors={book.authors} shelf={book.shelf} onShelfChange={this.props.onShelfChange} width={book.width} height={book.height} backgroundImage={book.backgroundImage} />
+              <Book book={book} key={key} updateBook={this.props.updateBook} />
           ))}
         </ol>
       </div>

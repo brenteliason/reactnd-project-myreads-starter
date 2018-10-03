@@ -1,9 +1,8 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 import Shelf from './Shelf';
-import Book from './Book';
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -33,7 +32,7 @@ class MainPage extends React.Component {
   render() {
 //create sublists from booklist filtered by book state shelf
 
-    let currentShelf, favoriteShelf, favoritesShelf, noneShelf, readShelf, wantShelf;
+    let currentShelf, readShelf, wantShelf;
 
     currentShelf = this.state.books.filter((book) => book.shelf === "currentlyReading")
     //console.log("Current shelf first book: " + currentShelf[0].title)
