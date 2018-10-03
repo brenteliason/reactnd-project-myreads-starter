@@ -3,14 +3,6 @@ import { Link } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 
 class Book extends Component {
-  state = {
-    shelf: this.props.shelf
-  }
-
-  changeShelf(event) {
-    console.log("Inside book, shelf changer used")
-  }
-
   componentDidMount() {
       console.log(this);
   }
@@ -29,7 +21,6 @@ class Book extends Component {
             <div className="book-shelf-changer">
               <select value={this.props.book.shelf || "none"} onChange={(e) => { this.props.updateBook(this.props.book, e.target.value) }}>
                 <option value="move" disabled>Move to...</option>
-                <option value="favorites">Favorites</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>

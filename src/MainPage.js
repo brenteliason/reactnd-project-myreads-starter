@@ -83,6 +83,15 @@ class MainPage extends React.Component {
   //const static masterBookList = this.state.books;
 
   updateBook = (book, shelf) => {
+    BooksAPI.update(book, shelf)
+    .then(response => {
+      book.shelf = shelf;
+      this.setState(state => ({
+        books: state.books.filter(b => b.id !== book.id).concat([book])
+      }));
+    });
+  }
+  /*updateShelf = (book, shelf) => {
     console.log("Update book called on main page for " + book + " on the " + shelf + " shelf");
     BooksAPI.update(book, shelf).then(resp => {
       book.shelf = shelf;
@@ -90,22 +99,19 @@ class MainPage extends React.Component {
         books: state.books.filter(test => test.id !== book.id).concat([book])
       }));
     });
-  }
+  }*/
 
   render() {
 //create sublists from booklist filtered by book state shelf
 
-    let currentShelf, favoriteShelf, readShelf, wantShelf;
+    let currentShelf, favoriteShelf, favoritesShelf, noneShelf, readShelf, wantShelf;
 
     currentShelf = this.state.books.filter((book) => book.shelf === "currentlyReading")
     //console.log("Current shelf first book: " + currentShelf[0].title)
-    favoriteShelf = this.state.books.filter((book) => book.shelf === "favorite")
-
     readShelf = this.state.books.filter((book) => book.shelf === "read")
     //console.log("Read shelf first book: " + readShelf[0].title)
     wantShelf = this.state.books.filter((book) => book.shelf === "wantToRead")
     //console.log("Want to read shelf first book: " + wantShelf[0].title)
-
 
     return (
       <div className="book-page">
@@ -115,10 +121,9 @@ class MainPage extends React.Component {
           </div>
           <div className="list-books-content">
             <div>
-              <Shelf name="Favorites" contents={favoriteShelf}/>
-              <Shelf name="Read" contents={readShelf}/>
-              <Shelf name="Currently Reading" contents={currentShelf}/>
-              <Shelf name="Want To Read" contents={wantShelf}/>
+              <Shelf name="Read" contents={readShelf} updateBook={this.updateBook}/>
+              <Shelf name="Currently Reading" contents={currentShelf} updateBook={this.updateBook}/>
+              <Shelf name="Want To Read" contents={wantShelf} updateBook={this.updateBook}/>
             </div>
           </div>
         </div>
