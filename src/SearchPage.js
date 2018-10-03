@@ -1,10 +1,8 @@
-import React from 'react'
-import * as BooksAPI from './BooksAPI'
-import './App.css'
+import React from 'react';
 import { Route, Link } from 'react-router-dom';
-
-import Book from './Book'
-
+import * as BooksAPI from './BooksAPI';
+import Book from './Book';
+import './App.css';
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -19,43 +17,39 @@ class SearchPage extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then(response => {
       //console.log(response);
+      this.updateQuery(this.state.query);
       this.setState({ books : response})
     });
   }
 
   updateQuery = (query) => {
+    //console.log("Latest query: " + query);
     this.setState({query : query}, this.submitSearch);
   }
 
   submitSearch() {
-    //console.log("Submit search function called on search page");
+    //console.log("submit search called with " + this.state.query + " as query");
     if(this.state.query === '' || this.state.query === undefined) {
+      //console.log("EMPTY OR UNDEFINED QUERY: Number of results equals " + this.state.results.length + " before being reset to zero");
       return this.setState({ results: [] });
     }
     BooksAPI.search(this.state.query.trim()).then(res => {
       //console.log(res);
       if (res.error) {
+        //console.log("ERROR CAUGHT: Number of results equals " + this.state.results.length + " before being reset to zero");
         return this.setState({ results: [] });
       }
       else {
         res.forEach(b => {
           let f = this.state.books.filter(B => B.id === b.id);
           //console.log(f);
-          //b.shelf = f[0] ? f[0].shelf : null;
           if (f[0]) {
-            //console.log("match\n\t");
-            //console.log(f);
+            //console.log("match\n\t" + f);
             b.shelf = f[0].shelf;
           }
+          //console.log("INSIDE SUBMIT SEARCH ELSE BLOCK: about to set number of results to: " + res.length);
           return this.setState({ results: res});
         });
-
-        /*res.forEach(b => (
-          let f = this.state.books.filter(b => b.id === f.id);
-          if (f[0])
-            b.shelf = f[0] ? f[0].shelf : null;
-        ))
-        return this.setState({ results: res});*/
       }
     });
   }
@@ -71,6 +65,11 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    //console.log("Rendering search page with " + this.state.results.length + " results");
+    /*if (this.state.query === "") {
+        this.updateQuery("");
+    }*/
+
     return (
           <div className="search-books">
             <div className="search-books-bar">

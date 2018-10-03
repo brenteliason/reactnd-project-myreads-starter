@@ -8,19 +8,6 @@ class Book extends Component {
   }
 
 	render() {
-      //console.log(this.props.title);
-      //console.log(this.props.authors);
-      //console.log(this.props.width);
-      //console.log(this.props.height);
-      //console.log(this.props.backgroundImage);
-      //console.log(this.props.shelf);
-      let authors;
-      if (this.props.book.authors === undefined)
-        authors = "No author";
-      else {
-        authors= this.props.book.authors[0];
-      }
-
       return (
         <li>
           <div className="book">

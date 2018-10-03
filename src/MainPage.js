@@ -1,13 +1,9 @@
-import React from 'react'
-import * as BooksAPI from './BooksAPI'
-import './App.css'
+import React from 'react';
 import { Route, Link } from 'react-router-dom';
-//import BookList from './BookList'
-import Shelf from './Shelf'
-//import BookShelfChanger from './BookShelfChanger'
-import Book from './Book'
-import escapeRegExp from 'escape-string-regexp';
-import sortBy from 'sort-by';
+import * as BooksAPI from './BooksAPI';
+import './App.css';
+import Shelf from './Shelf';
+import Book from './Book';
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -23,7 +19,6 @@ class MainPage extends React.Component {
       this.setState({ books : response})
     });
   }
-  //const static masterBookList = this.state.books;
 
   updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf)
@@ -34,15 +29,6 @@ class MainPage extends React.Component {
       }));
     });
   }
-  /*updateShelf = (book, shelf) => {
-    console.log("Update book called on main page for " + book + " on the " + shelf + " shelf");
-    BooksAPI.update(book, shelf).then(resp => {
-      book.shelf = shelf;
-      this.setState(state => ({
-        books: state.books.filter(test => test.id !== book.id).concat([book])
-      }));
-    });
-  }*/
 
   render() {
 //create sublists from booklist filtered by book state shelf
