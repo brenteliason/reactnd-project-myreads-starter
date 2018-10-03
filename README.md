@@ -25,18 +25,20 @@ To use the app:
     ├── App.css # Styles for the app. Feel free to customize this as you desire.
     ├── App.js # The base component of the app that launches the main page or search page based on user input.
     ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
+    ├── Book.js # Book component that stores book information for display on main page and search page
     ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
     ├── icons # Helpful images for your app. Use at your discretion.
     │   ├── add.svg
     │   ├── arrow-back.svg
     │   └── arrow-drop-down.svg
     ├── index.css # Global styles. You probably won't need to change anything here.
-    └── index.js # Creates the root html element and wraps the entire app in React Router
+    ├── index.js # Creates the root html element and wraps the entire app in React Router
+    ├── MainPage.js # Component that displays currently shelved books using Shelf components
+    ├── SearchPage.js # Component that allows users to search for books and displays the results using Book components
+    └── Shelf.js # Component that displays a list of books using Book components that have been selected for a particular shelf
 ```
 
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
-
-## Backend Server
+## Explanation of BooksAPI Backend Server
 
 To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
 
