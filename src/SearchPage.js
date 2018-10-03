@@ -18,7 +18,7 @@ class SearchPage extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(response => {
-      console.log(response);
+      //console.log(response);
       this.setState({ books : response})
     });
   }
@@ -28,17 +28,28 @@ class SearchPage extends React.Component {
   }
 
   submitSearch() {
-    console.log("Submit search function called on search page");
+    //console.log("Submit search function called on search page");
     if(this.state.query === '' || this.state.query === undefined) {
       return this.setState({ results: [] });
     }
     BooksAPI.search(this.state.query.trim()).then(res => {
-      console.log(res);
+      //console.log(res);
       if (res.error) {
         return this.setState({ results: [] });
       }
       else {
-        return this.setState({ results: res});
+        res.forEach(b => {
+          let f = this.state.books.filter(B => B.id === b.id);
+          //console.log(f);
+          //b.shelf = f[0] ? f[0].shelf : null;
+          if (f[0]) {
+            //console.log("match\n\t");
+            //console.log(f);
+            b.shelf = f[0].shelf;
+          }
+          return this.setState({ results: res});
+        });
+
         /*res.forEach(b => (
           let f = this.state.books.filter(b => b.id === f.id);
           if (f[0])

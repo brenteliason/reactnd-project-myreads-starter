@@ -19,7 +19,7 @@ class MainPage extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(response => {
-      console.log(response);
+      //console.log(response);
       this.setState({ books : response})
     });
   }
