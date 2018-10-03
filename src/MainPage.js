@@ -12,6 +12,7 @@ class MainPage extends React.Component {
     }
   }
 
+  //this method uses the BooksAPI getAll method to load all the selected books and add them to state
   componentDidMount() {
     BooksAPI.getAll().then(response => {
       //console.log(response);
@@ -19,6 +20,7 @@ class MainPage extends React.Component {
     });
   }
 
+  //this method uses the BooksAPI update method to change a book's shelf
   updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf)
     .then(response => {
@@ -30,10 +32,8 @@ class MainPage extends React.Component {
   }
 
   render() {
-//create sublists from booklist filtered by book state shelf
-
+    //creates lists of books based on shelf that can be passed into Shelf components
     let currentShelf, readShelf, wantShelf;
-
     currentShelf = this.state.books.filter((book) => book.shelf === "currentlyReading")
     //console.log("Current shelf first book: " + currentShelf[0].title)
     readShelf = this.state.books.filter((book) => book.shelf === "read")
@@ -41,6 +41,7 @@ class MainPage extends React.Component {
     wantShelf = this.state.books.filter((book) => book.shelf === "wantToRead")
     //console.log("Want to read shelf first book: " + wantShelf[0].title)
 
+    //returns all the currently shelved books organized by shelf as well as a link to the search page
     return (
       <div className="book-page">
         <div className="list-books">
